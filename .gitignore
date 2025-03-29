@@ -1,18 +1,71 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+*.tmp  # Added from your local version
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
 # Dependency directories
 node_modules/
-
-# Environment files
-.env
-.env.local
+jspm_packages/
+bower_components
 
 # Build files
 dist/
 build/
+build/Release
 
-# Logs and temporary files
-*.log
-*.tmp
+# Environment files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
 
-# IDE-specific files
+# Coverage and testing
+coverage
+*.lcov
+.nyc_output
+
+# Cache directories
+.grunt
+.cache
+.parcel-cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+.yarn/
+.pnp.*
+
+# Framework-specific
+.next
+out
+.nuxt
+.docusaurus
+.serverless/
+.fusebox/
+.dynamodb/
+
+# IDE-specific files (added from your local version)
 .idea/
 .vscode/
+.vscode-test
+
+# Other
+.tern-port
+.yarn-integrity
+*.tgz
+.node_repl_history
