@@ -7,26 +7,44 @@ import userRouter from "./routes/userRoute.js";
 import productRouter from "./routes/productRoute.js";
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
-// app config
+
 const app = express();
 const port = process.env.PORT || 4000;
+
+// Connect DB and Cloudinary
 connectDB();
-connectCloudnary()
+connectCloudnary();
+
+// Middleware
 app.use(express.json());
+
+// Handle invalid JSON
 app.use((err, req, res, next) => {
-    if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
-        return res.status(400).json({ success: false, msg: "Invalid JSON" });
-    }
-    next();
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    return res.status(400).json({ success: false, msg: "Invalid JSON" });
+  }
+  next();
 });
 
-app.use(cors());
-// api endpoints
+// Enable CORS for Vercel frontend
+app.use(cors({
+  origin: 'https://vogue-vault-frontend.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
+
+// Routes
 app.use("/api/user", userRouter);
 app.use("/api/product", productRouter);
-app.use('/api/cart',cartRouter)
+app.use("/api/cart", cartRouter);
+app.use("/api/order", orderRouter);
 
-app.use('/api/order',orderRouter)
-
+// Default route
 app.get("/", (req, res) => res.status(200).send("Hello World"));
-app.listen(port, () => console.log(`Listening on localhost:${port}`));
+
+// Only listen when not in Vercel (for local dev)
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(port, () => console.log(`Listening on localhost:${port}`));
+}
+
+export default app; // 👈 Required for Vercel
