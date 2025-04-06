@@ -4,5 +4,8 @@
     "dotenv": "^16.4.7",
     "react-router-dom": "^7.4.0",
     "react-toastify": "^11.0.5"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.0"
   }
 }

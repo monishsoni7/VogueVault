@@ -13,8 +13,12 @@ try {
 
 const imagesUrl = await Promise.all(
     images.map(async (item) => {
-    let result = await cloudinary.uploader.upload(item.path,{resource_type:'image'})
-    return result.secure_url
+    let result = await cloudinary.uploader.upload(item.path,{
+        resource_type:'image',
+        format: 'webp',
+        quality: 'auto'
+    })
+    return result.secure_url.replace(/\.(jpg|jpeg|png)/, '.webp')
 }))
 
 const productData={
