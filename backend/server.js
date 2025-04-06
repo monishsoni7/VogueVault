@@ -27,11 +27,23 @@ app.use((err, req, res, next) => {
 });
 
 // Enable CORS for Vercel frontend
-app.use(cors({
-  origin: 'https://vogue-vault-frontend.vercel.app',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
-}));
+const allowedOrigins = [
+    'https://vogue-vault-frontend.vercel.app',
+    'https://vogue-vault-admin.vercel.app'
+  ];
+  
+  app.use(cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+  }));
+  
 
 // Routes
 app.use("/api/user", userRouter);
