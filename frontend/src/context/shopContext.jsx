@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-// import { products } from "../assets/assets";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -8,16 +7,15 @@ export const shopContext = createContext();
 const ShopContextProvider = (props) => {
   const currency = "$";
   const delivery_fee = 10;
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
-// console.log("Backend URL:", backendUrl); // Debugging log
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const [search, setsearch] = useState("");
   const [showSearch, setshowSearch] = useState(false);
   const [cartItems, setcartItems] = useState({});
   const [products, setproducts] = useState([]);
   const navigate = useNavigate();
-  const [token, settoken] = useState('')
-  
+  const [token, settoken] = useState('');
+
   const addToCart = async (itemID, size) => {
     if (!size) {
       toast.error("Select Product Size");
@@ -36,12 +34,31 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
       cartData[itemID][size] = 1;
     }
     setcartItems(cartData);
+    const userId = localStorage.getItem('userId'); // Retrieve userId from local storage
+    // console.log("Adding to cart:", { userId, itemID, size }); // Debugging log
+
+    if (token) {
+      try {
+        await axios.post(`${backendUrl}/api/cart/add`, { userId, itemId: itemID, size }, { headers: { Authorization: `Bearer ${token}` } });
+      } catch (error) {
+        console.log(error);
+        toast.error(error.message);
+      }
+    }
   };
 
   const updateQuantity = async (itemID, size, quantity) => {
     let cartData = structuredClone(cartItems);
     cartData[itemID][size] = quantity;
     setcartItems(cartData);
+    if(token){
+      try {
+        await axios.post(`${backendUrl}/api/cart/update`, {  itemId: itemID, size, quantity }, { headers: { Authorization: `Bearer ${token}` } });
+      } catch (error) {
+        console.log(error)
+        toast.error(error.message);
+      }
+    }
   };
 
   const getCartAmount = () => {
@@ -73,37 +90,46 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
     return totalCount;
   };
 
-const getProductData = async () => {
-  // console.log("Fetching product data from the API...");
-
+  const getProductData = async () => {
     try {
       const response = await axios.get(backendUrl + '/api/product/list');
-      // console.log("Product data fetched successfully:", response.data); 
-
-      // Consider removing this line after confirming data fetch
-      if(response.data){
-        setproducts(response.data.products)
-      }
-      else{
-        toast.error(response.data.message)
+      if (response.data) {
+        setproducts(response.data.products);
+      } else {
+        toast.error(response.data.message);
       }
     } catch (error) {
       console.error("Error fetching product data:", error);
-      toast.error(error.message)
+      toast.error(error.message);
     }
   };
+
+const getUserCart = async (token) => {
+  try {
+    const userId = localStorage.getItem('userId'); // Retrieve userId from local storage
+    const response = await axios.post(`${backendUrl}/api/cart/get`, { userId }, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    if(response.data.success) {
+      setcartItems(response.data.cartData);
+    }
+  } catch (error) {
+    console.log(error)
+    toast.error(error.message);
+  }
+}
 
   useEffect(() => {
     getProductData();
   }, []);
-  useEffect(() => {
-    
-    if(!token && localStorage.getItem('token')){
-
-      settoken(localStorage.getItem('token'))
-    }
-  }, [])
   
+  useEffect(() => {
+    if (!token && localStorage.getItem('token')) {
+      settoken(localStorage.getItem('token'));
+      getUserCart(localStorage.getItem('token'))
+    }
+  }, []);
 
   const value = {
     products,
@@ -121,7 +147,8 @@ const getProductData = async () => {
     navigate,
     backendUrl,
     token,
-    settoken
+    settoken,
+    setcartItems
   };
 
   return (

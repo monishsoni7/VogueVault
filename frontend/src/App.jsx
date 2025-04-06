@@ -17,7 +17,8 @@ import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   return (
-      <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
+      <ShopContextProvider>
+        <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] bg-white dark:bg-gray-900 min-h-screen'>
         <ToastContainer />
         <Navbar />
         <SearchBar />
@@ -34,7 +35,9 @@ const App = () => {
           <Route path='/orders' element={<Orders />} />
         </Routes>
         <Footer />
-      </div>
+        </div>
+      </ShopContextProvider>
+
   );
 };
 

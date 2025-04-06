@@ -1,11 +1,18 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
         'rose': {
           500: '#FF0066',
           600: '#E6005C'
+        },
+        dark: {
+          900: '#111827',
+          800: '#1F2937',
+          700: '#374151',
+          600: '#4B5563',
         }
       },
       fontFamily: {
@@ -38,11 +45,8 @@ module.exports = {
       },
       backdropBlur: {
         xs: '2px',
-      },
-      backdropBlur: {
         sm: '4px',
       }
-
     },
   },
   plugins: [],

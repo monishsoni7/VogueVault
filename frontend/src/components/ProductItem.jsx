@@ -6,7 +6,7 @@ const ProductItem = ({ id, image, price, name }) => {
   const { currency } = useContext(shopContext)
 
   return (
-    <div className="group relative overflow-hidden bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+    <div className="group relative overflow-hidden bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl dark:hover:shadow-gray-700 transition-shadow duration-300">
       {/* Structural Frame */}
       <div className="absolute inset-0 border-2 border-black/5 rounded-2xl pointer-events-none" />
       
@@ -24,8 +24,8 @@ const ProductItem = ({ id, image, price, name }) => {
           <div className="absolute inset-0 bg-gradient-to-b from-black/0 to-black/20" />
           
           {/* Floating Price Tag */}
-          <div className="absolute bottom-4 left-4 bg-white px-3 py-1.5 rounded-full 
-            shadow-sm text-sm font-medium transition-all duration-300
+          <div className="absolute bottom-4 left-4 bg-white dark:bg-gray-900 px-3 py-1.5 rounded-full 
+            shadow-sm text-sm font-medium text-gray-900 dark:text-gray-100 transition-all duration-300
             group-hover:-translate-y-2">
             {currency}{price}
           </div>
@@ -34,15 +34,15 @@ const ProductItem = ({ id, image, price, name }) => {
 
       {/* Product Info with Hidden Details */}
       <div className="p-4 relative">
-        <h3 className="text-base font-medium text-gray-900 line-clamp-1 mb-1">{name}</h3>
+        <h3 className="text-base font-medium text-gray-900 dark:text-gray-100 line-clamp-1 mb-1">{name}</h3>
         
         {/* Interactive Rating & Actions */}
         <div className="flex justify-between items-center opacity-0 
           group-hover:opacity-100 transition-opacity duration-300">
-          <div className="flex items-center text-sm text-gray-500">
+          <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
             ⭐ 4.8 (238 reviews)
           </div>
-          <button className="text-gray-500 hover:text-rose-500 transition-colors">
+          <button className="text-gray-500 dark:text-gray-400 hover:text-rose-500 transition-colors">
             ❤
           </button>
         </div>

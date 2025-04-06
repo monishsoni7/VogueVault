@@ -12,7 +12,12 @@ const onSubmitHandler = async (e) => {
     const response = await axios.post(backendUrl + '/api/user/admin',{email,password})
     // console.log(response)
     if(response.data.success){
-        settoken(response.data.token)
+        console.log("Token set:", response.data.token); // Debugging log
+        console.log("User ID stored:", response.data.userId); // Debugging log
+
+    settoken(response.data.token);
+    localStorage.setItem('userId', response.data.userId); // Store userId in local storage
+
     }
     else{
         toast.error(response.data.message)

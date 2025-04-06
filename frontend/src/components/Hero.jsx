@@ -32,10 +32,10 @@ import { assets } from "../assets/assets";
 // Remove border, add gradient overlay, and improve CTA
 const Hero = () => {
   return (
-    <div className="relative flex flex-col sm:flex-row bg-gray-100 h-[80vh]">
+    <div className="relative flex flex-col sm:flex-row bg-gray-100 dark:bg-gray-800 h-[80vh]">
       {/* Text Section */}
       <div className="w-full sm:w-1/2 flex items-center justify-center p-8 z-10">
-        <div className="text-gray-800 space-y-4 max-w-md">
+        <div className="text-gray-800 dark:text-gray-100 space-y-4 max-w-md">
           <div className="flex items-center gap-3">
             <div className="w-12 h-[2px] bg-rose-500"/>
             <p className="font-medium tracking-widest text-sm">NEW SUMMER COLLECTION</p>

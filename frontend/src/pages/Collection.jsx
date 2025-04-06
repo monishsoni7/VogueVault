@@ -89,7 +89,7 @@ useEffect(() => {
           } sm:block `}
         >
           <p className="mb-3 text-sm font-medium">CATEGORIES</p>
-          <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
+          <div className="flex flex-col gap-2 text-sm font-light dark:text-white text-gray-700">
             <p className="flex gap-2">
               <input type="checkbox" className="w-3" value={"Men"} onClick={toggleCategory}   /> Men
             </p>
@@ -104,12 +104,12 @@ useEffect(() => {
         </div>
          {/*subcategory filter  */}
          <div
-          className={`border border-gray-700 pl-5 py-3 mt-6 ${
+          className={`border  border-gray-700 pl-5 py-3 mt-6 ${
             showFilter ? "" : "hidden"
           } sm:block `}
         >
           <p className="mb-3 text-sm font-medium">TYPES</p>
-          <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
+          <div className="flex flex-col gap-2 text-sm font-light dark:text-white text-gray-700">
             <p className="flex gap-2">
               <input type="checkbox" className="w-3" value={"Topwear"}  onClick={toggleSubCategory} /> Topwear
             </p>
